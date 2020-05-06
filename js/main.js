@@ -19,7 +19,9 @@ const loginInput = document.querySelector("#login");
 const userName = document.querySelector(".user-name");
 const buttonOut = document.querySelector(".button-out");
 
-let login = "";
+let login = localStorage.getItem("DeliveryFood");
+
+console.log(login);
 
 function toggleModalAuth() {
   modalAuth.classList.toggle("is-open");
@@ -27,7 +29,8 @@ function toggleModalAuth() {
 
 function authorized() {
   function logOut() {
-    login = "";
+    login = null;
+    localStorage.removeItem("DeliveryFood");
     buttonAuth.style.display = '';
     userName.style.display = "";
     buttonOut.style.display = "";
@@ -47,12 +50,14 @@ function notAuthorized() {
   function logIn(event) {
     event.preventDefault();
     login = loginInput.value;
+    localStorage.setItem("DeliveryFood", login);
     toggleModalAuth();
     buttonAuth.removeEventListener("click", toggleModalAuth);
     closeAuth.removeEventListener("click", toggleModalAuth);
     logInForm.removeEventListener("submit", logIn);
+    logInForm.reset();
     checkAuth();
-    enterPassword();
+    enterLogIn();
   }
   buttonAuth.addEventListener("click", toggleModalAuth);
   closeAuth.addEventListener("click", toggleModalAuth);
@@ -69,9 +74,9 @@ function checkAuth() {
 
 checkAuth();
 
-function enterPassword() {
+function enterLogIn() {
   if (login == "") {
-    alert("Введите пароль!");
+    alert("Введите логин!");
     modalAuth.classList.toggle("is-open");
   } 
 }
