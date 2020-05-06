@@ -31,6 +31,7 @@ function authorized() {
     buttonAuth.style.display = '';
     userName.style.display = "";
     buttonOut.style.display = "";
+    buttonOut.removeEventListener("click", logOut);
     checkAuth();
   }
   console.log("Авторизован");
@@ -47,6 +48,9 @@ function notAuthorized() {
     event.preventDefault();
     login = loginInput.value;
     toggleModalAuth();
+    buttonAuth.removeEventListener("click", toggleModalAuth);
+    closeAuth.removeEventListener("click", toggleModalAuth);
+    logInForm.removeEventListener("submit", logIn);
     checkAuth();
     enterPassword();
   }
